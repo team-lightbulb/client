@@ -7,11 +7,14 @@
   <string name="nav_header_desc">Navigation header</string>
   <string name="action_settings">Settings</string>
 
-  <string name="menu_home">Home</string>
-  <string name="menu_gallery">Gallery</string>
-  <string name="menu_slideshow">Slideshow</string>
-  <string name="menu_tools">Tools</string>
-  <string name="menu_share">Share</string>
-  <string name="menu_send">Send</string>
+  <string name="menu_recent">Recent Conversations</string>
+  <string name="menu_mine">My Conversations</string>
+  <string name="menu_search">Search</string>
+  <string name="menu_settings">Settings</string>
+  <string name="title_recent">LightBulb: Recent</string>
+  <string name="title_mine">LightBulb: My Conversations</string>
+  <string name="title_search">LightBulb: Search</string>
+  <string name="title_settings">LightBulb: Settings</string>
+
   <string name="login_failure">Unable to sign in with provided credentials</string>
 </resources>

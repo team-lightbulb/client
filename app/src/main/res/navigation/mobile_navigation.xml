@@ -3,41 +3,30 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:id="@+id/mobile_navigation"
-  app:startDestination="@+id/nav_home">
+  app:startDestination="@+id/nav_recent">
 
   <fragment
-    android:id="@+id/nav_home"
-    android:label="@string/menu_home"
-    android:name="edu.cnm.deepdive.lightbulb.controller.HomeFragment"
-    tools:layout="@layout/fragment_home"/>
+    android:id="@+id/nav_recent"
+    android:label="@string/title_recent"
+    android:name="edu.cnm.deepdive.lightbulb.controller.RecentFragment"
+    tools:layout="@layout/fragment_recent"/>
 
   <fragment
-    android:id="@+id/nav_gallery"
-    android:label="@string/menu_gallery"
+    android:id="@+id/nav_mine"
+    android:label="@string/title_mine"
     android:name="edu.cnm.deepdive.lightbulb.controller.GalleryFragment"
     tools:layout="@layout/fragment_gallery"/>
 
   <fragment
-    android:id="@+id/nav_slideshow"
-    android:label="@string/menu_slideshow"
+    android:id="@+id/nav_search"
+    android:label="@string/title_search"
     android:name="edu.cnm.deepdive.lightbulb.controller.SlideshowFragment"
     tools:layout="@layout/fragment_slideshow"/>
 
   <fragment
-    android:id="@+id/nav_tools"
-    android:label="@string/menu_tools"
+    android:id="@+id/nav_settings"
+    android:label="@string/title_settings"
     android:name="edu.cnm.deepdive.lightbulb.controller.ToolsFragment"
     tools:layout="@layout/fragment_tools"/>
 
-  <fragment
-    android:id="@+id/nav_share"
-    android:label="@string/menu_share"
-    android:name="edu.cnm.deepdive.lightbulb.controller.ShareFragment"
-    tools:layout="@layout/fragment_share"/>
-
-  <fragment
-    android:id="@+id/nav_send"
-    android:label="@string/menu_send"
-    android:name="edu.cnm.deepdive.lightbulb.controller.SendFragment"
-    tools:layout="@layout/fragment_send"/>
 </navigation>
