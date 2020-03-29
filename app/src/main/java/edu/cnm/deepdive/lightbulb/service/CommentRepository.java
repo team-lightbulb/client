@@ -45,17 +45,13 @@ public class CommentRepository {
     return InstanceHolder.INSTANCE;
   }
 
-  public Single<Comment> getCommentOfToday(String token, Date date) {
-    return getCommentOfToday(token, new Date());
-  }
-
-  public Single<Comment> getCommentOfDay(String token, Date date) {
-    return proxy.getCommentOfDay(String.format(OAUTH_HEADER_FORMAT, token), formatter.format(date))
+  public Single<List<Comment>> getAllComments(String token) {
+    return proxy.getAllComments(String.format(OAUTH_HEADER_FORMAT, token))
         .subscribeOn(Schedulers.from(networkPool));
   }
 
-  public Single<List<Comment>> getAllQuotes(String token) {
-    return proxy.getAllComments(String.format(OAUTH_HEADER_FORMAT, token))
+  public Single<List<Comment>> searchComments(String token, String filter) {
+    return proxy.getCommentsFiltered(String.format(OAUTH_HEADER_FORMAT, token), filter)
         .subscribeOn(Schedulers.from(networkPool));
   }
 
@@ -91,19 +87,6 @@ public class CommentRepository {
   public Single<Comment> get(String token, UUID id) {
     return proxy.getComment(String.format(OAUTH_HEADER_FORMAT, token), id)
         .subscribeOn(Schedulers.from(networkPool));
-  }
-
-  public Single<List<Content>> getAllContent(String token) {
-    return getAllKeywords(token, true, false)
-        .subscribeOn(Schedulers.io())
-        .map((keywords) -> {
-          List<Content> combined = new ArrayList<>();
-          for (Keyword keyword : keywords) {
-            combined.add(keyword);
-            Collections.addAll(combined, keyword.getComments());
-          }
-          return combined;
-        });
   }
 
   private static class InstanceHolder {

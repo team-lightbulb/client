@@ -29,13 +29,6 @@ public interface LightBulbService {
 
 
   @GET("comments")
-  Single<Comment> getRandomComment(@Header("Authorization") String oauthHeader);
-
-  @GET("comments/lightbulb")
-  Single<Comment> getCommentOfDay(
-      @Header("Authorization") String oauthHeader, @Query("date") String date);
-
-  @GET("comments")
   Single<List<Comment>> getAllComments(@Header("Authorization") String oauthHeader);
 
   @GET("comments/{id}")
@@ -45,6 +38,11 @@ public interface LightBulbService {
   Single<List<Keyword>> getAllKeywords(
       @Header("Authorization") String oauthHeader,
       @Query("includeNull") boolean includeNull, @Query("includeEmpty") boolean includeEmpty);
+
+  @GET("comments/search")
+  Single<List<Comment>> getCommentsFiltered(
+      @Header("Authorization") String oauthHeader,
+      @Query("q") String filter);
 
   @POST("comments")
   Single<Comment> postComment(@Header("Authorization") String oauthHeader, @Body Comment comment);

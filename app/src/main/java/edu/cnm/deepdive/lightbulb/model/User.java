@@ -23,9 +23,6 @@ public class User implements Content {
   private Comment[] comments;
 
   @Expose
-  private Keyword[] keywords;
-
-  @Expose
   private URL href;
 
   public UUID getId() {
@@ -66,14 +63,6 @@ public class User implements Content {
 
   public void setComments(Comment[] comments) {
     this.comments = comments;
-  }
-
-  public Keyword[] getKeywords() {
-    return keywords;
-  }
-
-  public void setKeywords(Keyword[] keywords) {
-    this.keywords = keywords;
   }
 
   public URL getHref() {

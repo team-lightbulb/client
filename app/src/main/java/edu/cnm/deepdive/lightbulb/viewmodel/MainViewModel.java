@@ -15,11 +15,10 @@ import java.util.UUID;
 
 public class MainViewModel {
 
-  private MutableLiveData<Comment> random;
-  private MutableLiveData<Comment> daily;
-  private MutableLiveData<List<Comment>> comments;
+  private MutableLiveData<List<Comment>> myComments;
+  private MutableLiveData<List<Comment>> recentComments;
+  private MutableLiveData<List<Comment>> searchComments;
   private MutableLiveData<List<Keyword>> keywords;
-  private MutableLiveData<List<Content>> contents;
   private MutableLiveData<Comment> comment;
   private final MutableLiveData<Throwable> throwable;
   private final CommentRepository repository;
@@ -28,29 +27,25 @@ public class MainViewModel {
   public MainViewModel() {
     repository = CommentRepository.getInstance();
     pending = new CompositeDisposable();
-    random = new MutableLiveData<>();
-    daily = new MutableLiveData<>();
-    comments = new MutableLiveData<>();
+    myComments = new MutableLiveData<>();
+    recentComments = new MutableLiveData<>();
+    searchComments = new MutableLiveData<>();
     keywords = new MutableLiveData<>();
     comment = new MutableLiveData<>();
-    contents = new MutableLiveData<>();
     throwable = new MutableLiveData<>();
-    refreshDaily();
-    refreshQuotes();
-    refreshSources();
-    refreshContents();
   }
 
-  public LiveData<Comment> getRandom() {
-    return random;
+
+  public LiveData<List<Comment>> getMyComments() {
+    return myComments;
   }
 
-  public LiveData<Comment> getDaily() {
-    return daily;
+  public LiveData<List<Comment>> getRecentComments() {
+    return recentComments;
   }
 
-  public LiveData<List<Comment>> getComments() {
-    return comments;
+  public LiveData<List<Comment>> getSearchComments() {
+    return searchComments;
   }
 
   public LiveData<List<Keyword>> getKeywords() {
@@ -61,87 +56,24 @@ public class MainViewModel {
     return comment;
   }
 
-  public LiveData<List<Content>> getContents() {
-    return contents;
-  }
-
   public LiveData<Throwable> getThrowable() {
     return throwable;
   }
 
-  public void refreshRandom() {
-    throwable.postValue(null);
+  public void setSearchFilter(String filter) {
+    throwable.setValue(null);
     GoogleSignInService.getInstance().refresh()
         .addOnSuccessListener((account) -> {
           pending.add(
-              repository.getRandom(account.getIdToken())
+              repository.searchComments(account.getIdToken(), filter)
                   .subscribe(
-                      random::postValue,
+                      searchComments::postValue,
                       throwable::postValue
                   )
           );
         })
-        .addOnFailureListener(throwable::postValue);
-  }
-
-  public void refreshDaily() {
-    throwable.postValue(null);
-    GoogleSignInService.getInstance().refresh()
-        .addOnSuccessListener((account) -> {
-          pending.add(
-              repository.getCommentOfDay(account.getIdToken())
-                  .subscribe(
-                      daily::postValue,
-                      throwable::postValue
-                  )
-          );
-        })
-        .addOnFailureListener(throwable::postValue);
-  }
-
-  public void refreshQuotes() {
-    throwable.postValue(null);
-    GoogleSignInService.getInstance().refresh()
-        .addOnSuccessListener((account) -> {
-          pending.add(
-              repository.getAllQuotes(account.getIdToken())
-                  .subscribe(
-                      comments::postValue,
-                      throwable::postValue
-                  )
-          );
-        })
-        .addOnFailureListener(throwable::postValue);
-  }
-
-  public void refreshSources() {
-    throwable.postValue(null);
-    GoogleSignInService.getInstance().refresh()
-        .addOnSuccessListener((account) -> {
-          pending.add(
-              repository.getAllKeywords(account.getIdToken(), false, true)
-                  .subscribe(
-                      keywords::postValue,
-                      throwable::postValue
-                  )
-          );
-        })
-        .addOnFailureListener(throwable::postValue);
-  }
-
-  public void refreshContents() {
-    throwable.postValue(null);
-    GoogleSignInService.getInstance().refresh()
-        .addOnSuccessListener((account) -> {
-          pending.add(
-              repository.getAllContent(account.getIdToken())
-                  .subscribe(
-                      contents::postValue,
-                      throwable::postValue
-                  )
-          );
-        })
-        .addOnFailureListener(throwable::postValue);
+        .addOnFailureListener(
+            throwable::postValue);
   }
 
   public void save(Comment comment) {
@@ -153,10 +85,6 @@ public class MainViewModel {
                   .subscribe(
                       () -> {
                         this.comment.postValue(null);
-                        refreshDaily();
-                        refreshContents();
-                        refreshComments();
-                        refreshKeywords();
                       },
                       throwable::postValue
                   )
@@ -174,9 +102,6 @@ public class MainViewModel {
                   .subscribe(
                       () -> {
                         this.comment.postValue(null);
-                        refreshDaily();
-                        refreshContents();
-                        refreshComments();
                       },
                       throwable::postValue
                   )

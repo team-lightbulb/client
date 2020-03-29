@@ -20,9 +20,6 @@ public class Keyword implements Content {
   private String name;
 
   @Expose
-  private User[] users;
-
-  @Expose
   private Comment[] comments;
 
   @Expose
@@ -58,14 +55,6 @@ public class Keyword implements Content {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public User[] getUsers() {
-    return users;
-  }
-
-  public void setUsers(User[] users) {
-    this.users = users;
   }
 
   public Comment[] getComments() {

@@ -10,9 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import edu.cnm.deepdive.lightbulb.R;
 import edu.cnm.deepdive.lightbulb.model.Comment;
 import edu.cnm.deepdive.lightbulb.model.Keyword;
+import edu.cnm.deepdive.lightbulb.view.CommentRecyclerAdapter.Holder;
 import java.util.List;
 
-public class CommentRecyclerAdapter {
+public class CommentRecyclerAdapter extends RecyclerView.Adapter<Holder> {
 
   private final Context context;
   private final List<Comment> comments;

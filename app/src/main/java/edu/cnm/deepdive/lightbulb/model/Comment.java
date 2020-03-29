@@ -20,7 +20,7 @@ public class Comment implements Content {
   private String name;
 
   @Expose
-  private User[] users;
+  private User user;
 
   @Expose
   private Keyword[] keywords;
@@ -60,12 +60,12 @@ public class Comment implements Content {
     this.name = name;
   }
 
-  public User[] getUsers() {
-    return users;
+  public User getUser() {
+    return user;
   }
 
-  public void setUsers(User[] users) {
-    this.users = users;
+  public void setUser(User user) {
+    this.user = user;
   }
 
   public Keyword[] getKeywords() {
