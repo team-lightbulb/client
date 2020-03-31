@@ -8,7 +8,7 @@
   app:cardCornerRadius="2dp">
 
   <androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/comment_text"
+    android:id="@+id/click_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="8dp"
@@ -17,13 +17,53 @@
     android:background="?android:attr/selectableItemBackground">
 
     <TextView
-      android:id="@+id/comment"
+      android:id="@+id/date"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
-      style="@style/TextAppearance.MaterialComponents.Headline4"
+      android:layout_margin="4dp"
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"/>
+      app:layout_constraintEnd_toStartOf="@+id/name"
+      app:layout_constraintHorizontal_weight="1"/>
+
+    <TextView
+      android:id="@+id/name"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_margin="4dp"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toEndOf="@id/date"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_weight="3"/>
+
+    <androidx.constraintlayout.widget.Barrier
+      android:id="@+id/horizontal_barrier"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:barrierDirection="bottom"
+      app:constraint_referenced_ids="date,name"/>
+
+    <TextView
+      android:id="@+id/author"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_margin="4dp"
+      app:layout_constraintTop_toBottomOf="@id/horizontal_barrier"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toStartOf="@id/keywords"
+      app:layout_constraintHorizontal_weight="2"/>
+
+
+    <TextView
+      android:id="@+id/keywords"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_margin="4dp"
+      app:layout_constraintTop_toBottomOf="@id/horizontal_barrier"
+      app:layout_constraintStart_toEndOf="@id/author"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_weight="3"/>
+
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

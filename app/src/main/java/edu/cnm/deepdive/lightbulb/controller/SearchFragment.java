@@ -38,10 +38,10 @@ public class SearchFragment extends Fragment implements OnQueryTextListener {
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     viewModel.getSearchComments().observe(getActivity(), (comments) -> {
-      CommentRecyclerAdapter adapter = new CommentRecyclerAdapter(getContext(), comments, (pos, comment) -> {
-       //TODO Display individual comment.
-      });
-      searchList.setAdapter(adapter);
+////      CommentRecyclerAdapter adapter = new CommentRecyclerAdapter(getContext(), comments, (pos, comment) -> {
+////       //TODO Display individual comment.
+////      });
+//      searchList.setAdapter(adapter);
     });
   }
 

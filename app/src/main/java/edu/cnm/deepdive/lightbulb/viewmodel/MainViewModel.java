@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.OnLifecycleEvent;
 import edu.cnm.deepdive.lightbulb.model.Comment;
-import edu.cnm.deepdive.lightbulb.model.Content;
 import edu.cnm.deepdive.lightbulb.model.Keyword;
 import edu.cnm.deepdive.lightbulb.service.CommentRepository;
 import edu.cnm.deepdive.lightbulb.service.GoogleSignInService;

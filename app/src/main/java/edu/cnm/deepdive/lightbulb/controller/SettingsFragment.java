@@ -10,14 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.preference.PreferenceFragmentCompat;
 import edu.cnm.deepdive.lightbulb.R;
 
-public class RecentFragment extends Fragment {
+public class SettingsFragment extends PreferenceFragmentCompat {
 
 
-  public View onCreateView(@NonNull LayoutInflater inflater,
-      ViewGroup container, Bundle savedInstanceState) {
-    View root = inflater.inflate(R.layout.fragment_recent, container, false);
-    return root;
+  @Override
+  public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+    setPreferencesFromResource(R.xml.settings, rootKey);
   }
 }

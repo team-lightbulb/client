@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.Date;
 import java.util.UUID;
 
-public class Comment implements Content {
+public class Comment {
 
   @Expose
   private UUID id;
@@ -23,10 +23,15 @@ public class Comment implements Content {
   private User user;
 
   @Expose
+  private Comment reference;
+
+  @Expose
   private Keyword[] keywords;
 
   @Expose
   private URL href;
+
+  private int depth;
 
   public UUID getId() {
     return id;
@@ -68,6 +73,14 @@ public class Comment implements Content {
     this.user = user;
   }
 
+  public Comment getReference() {
+    return reference;
+  }
+
+  public void setReference(Comment reference) {
+    this.reference = reference;
+  }
+
   public Keyword[] getKeywords() {
     return keywords;
   }
@@ -82,5 +95,18 @@ public class Comment implements Content {
 
   public void setHref(URL href) {
     this.href = href;
+  }
+
+  public int getDepth() {
+    return depth;
+  }
+
+  public void setDepth(int depth) {
+    this.depth = depth;
+  }
+
+  public boolean isResponseTo(Comment comment) {
+    Comment reference = getReference();
+    return reference != null && (reference == comment || reference.isResponseTo(comment));
   }
 }

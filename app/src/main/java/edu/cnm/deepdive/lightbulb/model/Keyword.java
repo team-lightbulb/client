@@ -1,11 +1,12 @@
 package edu.cnm.deepdive.lightbulb.model;
 
+import androidx.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 import java.net.URL;
 import java.util.Date;
 import java.util.UUID;
 
-public class Keyword implements Content {
+public class Keyword {
 
   @Expose
   private UUID id;
@@ -71,5 +72,11 @@ public class Keyword implements Content {
 
   public void setHref(URL href) {
     this.href = href;
+  }
+
+  @NonNull
+  @Override
+  public String toString() {
+    return name;
   }
 }

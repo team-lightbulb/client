@@ -12,22 +12,11 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import edu.cnm.deepdive.lightbulb.R;
 
-public class ToolsFragment extends Fragment {
-
-  private ToolsViewModel toolsViewModel;
+public class MyCommentsFragment extends Fragment {
 
   public View onCreateView(@NonNull LayoutInflater inflater,
       ViewGroup container, Bundle savedInstanceState) {
-    toolsViewModel =
-        ViewModelProviders.of(this).get(ToolsViewModel.class);
-    View root = inflater.inflate(R.layout.fragment_tools, container, false);
-    final TextView textView = root.findViewById(R.id.text_tools);
-    toolsViewModel.getText().observe(this, new Observer<String>() {
-      @Override
-      public void onChanged(@Nullable String s) {
-        textView.setText(s);
-      }
-    });
+    View root = inflater.inflate(R.layout.fragment_my_comments, container, false);
     return root;
   }
 }

@@ -11,6 +11,8 @@ import edu.cnm.deepdive.lightbulb.R;
 import edu.cnm.deepdive.lightbulb.model.Comment;
 import edu.cnm.deepdive.lightbulb.model.Keyword;
 import edu.cnm.deepdive.lightbulb.view.CommentRecyclerAdapter.Holder;
+import java.text.DateFormat;
+import java.util.LinkedList;
 import java.util.List;
 
 public class CommentRecyclerAdapter extends RecyclerView.Adapter<Holder> {
@@ -18,6 +20,9 @@ public class CommentRecyclerAdapter extends RecyclerView.Adapter<Holder> {
   private final Context context;
   private final List<Comment> comments;
   private final OnQuoteClickListener listener;
+  private final DateFormat dateFormat;
+  private final DateFormat timeFormat;
+  private final String dateTimeFormat;
 
   public CommentRecyclerAdapter(Context context,
       List<Comment> comments,
@@ -25,6 +30,9 @@ public class CommentRecyclerAdapter extends RecyclerView.Adapter<Holder> {
     this.context = context;
     this.comments = comments;
     this.listener = listener;
+    dateFormat = android.text.format.DateFormat.getMediumDateFormat(context);
+    timeFormat = android.text.format.DateFormat.getTimeFormat(context);
+    dateTimeFormat = context.getString(R.string.date_time_format);
   }
 
 
@@ -54,24 +62,34 @@ public class CommentRecyclerAdapter extends RecyclerView.Adapter<Holder> {
 
   class Holder extends RecyclerView.ViewHolder {
 
-    private final TextView commentText;
-    private final TextView commentKeyword;
+    private static final String KEYWORD_DELIMITER = ", ";
+
+    private final View clickView;
+    private final TextView date;
+    private final TextView name;
+    private final TextView author;
+    private final TextView keywords;
 
     private Holder(View root) {
       super(root);
-      commentText = root.findViewById(R.id.comment_text);
-      commentKeyword = root.findViewById(R.id.comment_keyword);
+      clickView = root.findViewById(R.id.click_view);
+      date = root.findViewById(R.id.date);
+      name = root.findViewById(R.id.name);
+      author = root.findViewById(R.id.author);
+      keywords = root.findViewById(R.id.keywords);
     }
 
     private void bind(int position, Comment comment) {
-      commentText.setText(context.getString(R.string.quote_format, comment.getText()));
-      Keyword keyword = comment.getKeyword();
-      String name = (keyword != null) ? keyword.getName() : null;
-      String attribution = (name != null)
-          ? context.getString(R.string.attribution_format, name)
-          : context.getString(R.string.unattributed_source);
-      commentKeyword.setText(attribution);
-      itemView.setOnClickListener((v) -> listener.onCommentClick(getAdapterPosition(), comment));
+      date.setText(String.format(dateTimeFormat,
+          dateFormat.format(comment.getCreated()), timeFormat.format(comment.getCreated())));
+      name.setText(comment.getName());
+      author.setText(comment.getUser().getName());
+      StringBuilder builder = new StringBuilder();
+      for (Keyword keyword : comment.getKeywords()) {
+        builder.append(keyword.getName()).append(KEYWORD_DELIMITER);
+      }
+      keywords.setText(builder.substring(0, builder.length() - KEYWORD_DELIMITER.length()));
+      clickView.setOnClickListener((v) -> listener.onCommentClick(getAdapterPosition(), comment));
       itemView.setTag(comment);
     }
 

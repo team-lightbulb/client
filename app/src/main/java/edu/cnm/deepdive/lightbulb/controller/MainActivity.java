@@ -1,6 +1,9 @@
 package edu.cnm.deepdive.lightbulb.controller;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
+import androidx.annotation.NonNull;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import android.view.View;
@@ -15,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import edu.cnm.deepdive.lightbulb.R;
+import edu.cnm.deepdive.lightbulb.service.GoogleSignInService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,6 +49,22 @@ public class MainActivity extends AppCompatActivity {
     // Inflate the menu; this adds items to the action bar if it is present.
     getMenuInflater().inflate(R.menu.main, menu);
     return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    if (item.getItemId() == R.id.sign_out) {
+      GoogleSignInService.getInstance().signOut()
+          .addOnCompleteListener((ignore) -> {
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+          });
+      return true;
+    } else {
+      return super.onOptionsItemSelected(item);
+
+    }
   }
 
   @Override

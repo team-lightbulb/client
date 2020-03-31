@@ -14,8 +14,8 @@
   <fragment
     android:id="@+id/nav_mine"
     android:label="@string/title_mine"
-    android:name="edu.cnm.deepdive.lightbulb.controller.GalleryFragment"
-    tools:layout="@layout/fragment_gallery"/>
+    android:name="edu.cnm.deepdive.lightbulb.controller.MyCommentsFragment"
+    tools:layout="@layout/fragment_my_comments"/>
 
   <fragment
     android:id="@+id/nav_search"
@@ -26,7 +26,6 @@
   <fragment
     android:id="@+id/nav_settings"
     android:label="@string/title_settings"
-    android:name="edu.cnm.deepdive.lightbulb.controller.ToolsFragment"
-    tools:layout="@layout/fragment_tools"/>
+    android:name="edu.cnm.deepdive.lightbulb.controller.SettingsFragment"/>
 
 </navigation>
