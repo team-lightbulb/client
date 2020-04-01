@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -14,9 +15,10 @@ import edu.cnm.deepdive.lightbulb.R;
 
 public class MyCommentsFragment extends Fragment {
 
+
   public View onCreateView(@NonNull LayoutInflater inflater,
       ViewGroup container, Bundle savedInstanceState) {
-    View root = inflater.inflate(R.layout.fragment_my_comments, container, false);
+    View root = inflater.inflate(R.layout.comment_by_author, container, false);
     return root;
   }
 }

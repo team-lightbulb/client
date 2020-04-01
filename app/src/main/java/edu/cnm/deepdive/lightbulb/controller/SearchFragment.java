@@ -24,15 +24,12 @@ public class SearchFragment extends Fragment implements OnQueryTextListener {
   private MainViewModel viewModel;
   private RecyclerView searchList;
   private SearchView filter;
-  private EditText comment;
-
 
   public View onCreateView(@NonNull LayoutInflater inflater,
       ViewGroup container, Bundle savedInstanceState) {
     View root = inflater.inflate(R.layout.fragment_search, container, false);
     searchList = root.findViewById(R.id.search_list);
     filter = root.findViewById(R.id.filter);
-    comment = root.findViewById(R.id.comment_by_author)
     root.findViewById(R.id.start_conversation).setOnClickListener((v) -> {
       // TODO Invoke method to start a new conversation.
     });
