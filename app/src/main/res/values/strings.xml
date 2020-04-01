@@ -18,4 +18,5 @@
 
   <string name="login_failure">Unable to sign in with provided credentials</string>
   <string name="date_time_format">%1$s %2$s</string>
+  <string name="comments">comments</string>
 </resources>
