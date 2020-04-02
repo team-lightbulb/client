@@ -23,6 +23,9 @@ public class Comment {
   private String text;
 
   @Expose
+  private String subject;
+
+  @Expose
   private User user;
 
   @Expose
@@ -74,6 +77,14 @@ public class Comment {
 
   public void setText(String text) {
     this.text = text;
+  }
+
+  public String getSubject() {
+    return subject;
+  }
+
+  public void setSubject(String subject) {
+    this.subject = subject;
   }
 
   public User getUser() {
