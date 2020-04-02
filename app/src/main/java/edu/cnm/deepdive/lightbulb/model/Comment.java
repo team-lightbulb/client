@@ -20,6 +20,9 @@ public class Comment {
   private String name;
 
   @Expose
+  private String text;
+
+  @Expose
   private User user;
 
   @Expose
@@ -63,6 +66,14 @@ public class Comment {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public String getText() {
+    return text;
+  }
+
+  public void setText(String text) {
+    this.text = text;
   }
 
   public User getUser() {

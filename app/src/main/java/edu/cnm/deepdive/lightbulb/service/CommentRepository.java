@@ -28,6 +28,9 @@ public class CommentRepository {
       comparison = 1;
     } else if (c2.isResponseTo(c1)) {
       comparison = -1;
+    } else {
+      Comment[] ancestors = getAncestorSiblings(c1, c2);
+      comparison = -ancestors[0].getCreated().compareTo(ancestors[1].getCreated());
     }
     return comparison;
   };
@@ -52,13 +55,7 @@ public class CommentRepository {
         .subscribeOn(Schedulers.from(networkPool))
         .map(this::linkReferences)
         .map((comments) -> {
-          Collections.sort(comments, (c1, c2) -> {
-            int result = THREADED_COMPARATOR.compare(c1, c2);
-            if (result == 0) {
-              result = c2.getCreated().compareTo(c1.getCreated());
-            }
-            return result;
-          });
+          Collections.sort(comments, THREADED_COMPARATOR);
           return comments;
         });
   }
@@ -146,6 +143,20 @@ public class CommentRepository {
     }
     return comment.getDepth();
 //    return (comment.getDepth() >= 0) ? comment.getDepth() : getDepth(comment.getReference()) + 1;
+  }
+
+  private static Comment[] getAncestorSiblings(Comment c1, Comment c2) {
+    while (c1.getDepth() > c2.getDepth()) {
+      c1 = c1.getReference();
+    }
+    while (c2.getDepth() > c1.getDepth()) {
+      c2 = c2.getReference();
+    }
+    while (c1.getReference() != c2.getReference()) {
+      c1 = c1.getReference();
+      c2 = c2.getReference();
+    }
+    return new Comment[] {c1, c2};
   }
 
   private static class InstanceHolder {

@@ -1,5 +1,8 @@
 package edu.cnm.deepdive.lightbulb.viewmodel;
 
+import android.app.Application;
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.Lifecycle.Event;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -12,7 +15,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import java.util.List;
 import java.util.UUID;
 
-public class MainViewModel {
+public class MainViewModel extends AndroidViewModel {
 
   private MutableLiveData<List<Comment>> myComments;
   private MutableLiveData<List<Comment>> recentComments;
@@ -23,7 +26,8 @@ public class MainViewModel {
   private final CommentRepository repository;
   private CompositeDisposable pending;
 
-  public MainViewModel() {
+  public MainViewModel(@NonNull Application application) {
+    super(application);
     repository = CommentRepository.getInstance();
     pending = new CompositeDisposable();
     myComments = new MutableLiveData<>();
@@ -32,8 +36,8 @@ public class MainViewModel {
     keywords = new MutableLiveData<>();
     comment = new MutableLiveData<>();
     throwable = new MutableLiveData<>();
+    refreshComments();
   }
-
 
   public LiveData<List<Comment>> getMyComments() {
     return myComments;
@@ -73,6 +77,20 @@ public class MainViewModel {
         })
         .addOnFailureListener(
             throwable::postValue);
+  }
+
+  public void refreshComments() {
+    throwable.setValue(null);
+    GoogleSignInService.getInstance().refresh()
+        .addOnSuccessListener((account) ->
+            pending.add(
+                repository.getAllComments(account.getIdToken())
+                    .subscribe(
+                        recentComments::postValue,
+                        throwable::postValue
+                    )
+            ))
+        .addOnFailureListener(throwable::postValue);
   }
 
   public void save(Comment comment) {

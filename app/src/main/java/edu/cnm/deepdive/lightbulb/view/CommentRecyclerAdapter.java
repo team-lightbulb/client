@@ -12,21 +12,20 @@ import edu.cnm.deepdive.lightbulb.model.Comment;
 import edu.cnm.deepdive.lightbulb.model.Keyword;
 import edu.cnm.deepdive.lightbulb.view.CommentRecyclerAdapter.Holder;
 import java.text.DateFormat;
-import java.util.LinkedList;
 import java.util.List;
 
 public class CommentRecyclerAdapter extends RecyclerView.Adapter<Holder> {
 
   private final Context context;
   private final List<Comment> comments;
-  private final OnQuoteClickListener listener;
+  private final OnCommentClickListener listener;
   private final DateFormat dateFormat;
   private final DateFormat timeFormat;
   private final String dateTimeFormat;
 
   public CommentRecyclerAdapter(Context context,
       List<Comment> comments,
-      OnQuoteClickListener listener) {
+      OnCommentClickListener listener) {
     this.context = context;
     this.comments = comments;
     this.listener = listener;
@@ -54,7 +53,7 @@ public class CommentRecyclerAdapter extends RecyclerView.Adapter<Holder> {
   }
 
   @FunctionalInterface
-  public interface OnQuoteClickListener {
+  public interface OnCommentClickListener {
 
     void onCommentClick(int position, Comment comment);
 
@@ -88,7 +87,14 @@ public class CommentRecyclerAdapter extends RecyclerView.Adapter<Holder> {
       for (Keyword keyword : comment.getKeywords()) {
         builder.append(keyword.getName()).append(KEYWORD_DELIMITER);
       }
-      keywords.setText(builder.substring(0, builder.length() - KEYWORD_DELIMITER.length()));
+      keywords.setText(
+          builder.substring(0, Math.max(0, builder.length() - KEYWORD_DELIMITER.length())));
+      int startPadding = clickView.getPaddingStart();
+      int endPadding = clickView.getPaddingEnd();
+      int topPadding = clickView.getPaddingTop();
+      int bottomPadding = clickView.getPaddingBottom();
+      clickView.setPaddingRelative(
+          startPadding * (comment.getDepth() + 1), topPadding, endPadding, bottomPadding);
       clickView.setOnClickListener((v) -> listener.onCommentClick(getAdapterPosition(), comment));
       itemView.setTag(comment);
     }

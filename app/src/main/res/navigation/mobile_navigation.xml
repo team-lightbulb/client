@@ -15,7 +15,7 @@
     android:id="@+id/nav_mine"
     android:label="@string/title_mine"
     android:name="edu.cnm.deepdive.lightbulb.controller.MyCommentsFragment"
-    tools:layout="@layout/fragment_my_comments"/>
+    tools:layout="@layout/fragment_new_comment"/>
 
   <fragment
     android:id="@+id/nav_search"

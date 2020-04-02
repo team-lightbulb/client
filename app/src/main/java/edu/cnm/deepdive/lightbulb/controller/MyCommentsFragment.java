@@ -18,7 +18,7 @@ public class MyCommentsFragment extends Fragment {
 
   public View onCreateView(@NonNull LayoutInflater inflater,
       ViewGroup container, Bundle savedInstanceState) {
-    View root = inflater.inflate(R.layout.comment_by_author, container, false);
+    View root = inflater.inflate(R.layout.fragment_my_comments, container, false);
     return root;
   }
 }

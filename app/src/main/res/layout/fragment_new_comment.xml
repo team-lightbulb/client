@@ -13,7 +13,7 @@
     android:padding="8dp">
 
     <com.google.android.material.textfield.TextInputLayout
-      android:id="@+id/comment_by_author"
+      android:id="@+id/subject_layout"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       app:hintEnabled="true"
@@ -22,7 +22,7 @@
       app:layout_constraintStart_toStartOf="parent">
 
       <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/topic"
+        android:id="@+id/subject"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
@@ -36,7 +36,7 @@
       android:layout_height="wrap_content"
       app:hintEnabled="true"
       app:hintAnimationEnabled="true"
-      app:layout_constraintTop_toBottomOf="@id/comment_by_author"
+      app:layout_constraintTop_toBottomOf="@id/subject_layout"
       app:layout_constraintStart_toStartOf="parent">
 
       <com.google.android.material.textfield.TextInputEditText
@@ -46,7 +46,7 @@
         android:minLines="3"
         android:maxLines="6"
         android:inputType="textMultiLine"
-        android:hint="Start a conversation"/>
+        android:hint="@string/text_of_post"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 

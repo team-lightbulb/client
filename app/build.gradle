@@ -11,11 +11,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "BASE_URL", "\"http://10.0.2.2:8080/lightbulb/\""
-        buildConfigField "String", "CLIENT_ID", "\"57628132615-ipqo89089au098pe60kpkvh0uk0feq0l.apps.googleusercontent.com\""
-        buildConfigField "String", "CLIENT_ID", "\"57628132615-kr3uh3imov1b262q4s5ai0hpo1sgkqdc.apps.googleusercontent.com\""
-        buildConfigField "String", "CLIENT_ID", "\"57628132615-er5nqlrp77vesu16m9jvs9kgupbckm3p.apps.googleusercontent.com\""
-        buildConfigField "String", "CLIENT_ID", "\"57628132615-n4jg9bvpb463lcf9kaj6s4ie6eq303c5.apps.googleusercontent.com\""
-        buildConfigField "String", "CLIENT_ID", "\"57628132615-u9rcs4j4rsh7b2a73kdsd3nfhr746u0m.apps.googleusercontent.com\""
+        buildConfigField "String", "CLIENT_ID", "\"57628132615-ar9grma3je05tga7ft85jm33lat2ln1n.apps.googleusercontent.com\""
     }
     buildTypes {
         release {
