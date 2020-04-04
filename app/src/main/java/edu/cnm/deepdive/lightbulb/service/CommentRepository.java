@@ -39,6 +39,7 @@ public class CommentRepository {
   private final Executor networkPool;
   private final DateFormat formatter;
 
+
   @SuppressLint("SimpleDateFormat")
   private CommentRepository() {
     proxy = LightBulbService.getInstance();
