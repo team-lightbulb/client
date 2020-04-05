@@ -41,26 +41,21 @@ public class MainActivity extends AppCompatActivity {
     NavigationView navigationView = findViewById(R.id.nav_view);
 
     //inflate header layout
-    View navView =  navigationView.inflateHeaderView(R.layout.nav_header_main);
+    View navView = navigationView.inflateHeaderView(R.layout.nav_header_main);
 //reference to views
-    ImageView imgvw = (ImageView)navView.findViewById(R.id.avatar);
-    TextView name = (TextView)navView.findViewById(R.id.name);
-    TextView email = (TextView)navView.findViewById( R.id.email );
+    ImageView avatar = (ImageView) navView.findViewById(R.id.avatar);
+    TextView name = (TextView) navView.findViewById(R.id.name);
+    TextView email = (TextView) navView.findViewById(R.id.email);
 //set views
 //    imgvw.setImageResource( Picasso.get().load( googleSignInService.getAccount().getValue().getPhotoUrl().getPath(). ) );
     GoogleSignInService.getInstance().getAccount().observe(this, (account) -> {
       if (account != null) {
-        Picasso.get().load(account.getPhotoUrl()).into(imgvw);
-      }
-    });
-
-    GoogleSignInService.getInstance().getAccount().observe(this, (account) -> {
-      if (account != null) {
+        if (account.getPhotoUrl() != null) {
+          Picasso.get().load(account.getPhotoUrl()).into(avatar);
+        } else {
+          avatar.setImageResource(R.drawable.ic_lightbulb);
+        }
         name.setText(account.getDisplayName());
-      }
-    });
-    GoogleSignInService.getInstance().getAccount().observe(this, (account) -> {
-      if (account != null) {
         email.setText(account.getEmail());
       }
     });
