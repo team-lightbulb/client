@@ -20,6 +20,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
+import com.squareup.picasso.Picasso;
 import edu.cnm.deepdive.lightbulb.R;
 import edu.cnm.deepdive.lightbulb.service.GoogleSignInService;
 import java.util.Objects;
@@ -46,11 +47,23 @@ public class MainActivity extends AppCompatActivity {
     TextView name = (TextView)navView.findViewById(R.id.name);
     TextView email = (TextView)navView.findViewById( R.id.email );
 //set views
-//    imgvw.setImageResource(R.drawable.your_image);
-    name.setText("Steven Zuniga");
+//    imgvw.setImageResource( Picasso.get().load( googleSignInService.getAccount().getValue().getPhotoUrl().getPath(). ) );
+    GoogleSignInService.getInstance().getAccount().observe(this, (account) -> {
+      if (account != null) {
+        Picasso.get().load(account.getPhotoUrl()).into(imgvw);
+      }
+    });
 
-//    navigationView.setNavigationItemSelectedListener(
-//        (NavigationView.OnNavigationItemSelectedListener) this );
+    GoogleSignInService.getInstance().getAccount().observe(this, (account) -> {
+      if (account != null) {
+        name.setText(account.getDisplayName());
+      }
+    });
+    GoogleSignInService.getInstance().getAccount().observe(this, (account) -> {
+      if (account != null) {
+        email.setText(account.getEmail());
+      }
+    });
 
     // Passing each menu ID as a set of Ids because each
     // menu should be considered as top level destinations.
