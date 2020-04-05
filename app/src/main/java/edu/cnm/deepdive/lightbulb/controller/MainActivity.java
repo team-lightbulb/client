@@ -3,8 +3,11 @@ package edu.cnm.deepdive.lightbulb.controller;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener;
 import com.google.android.material.snackbar.Snackbar;
 import android.view.View;
 import androidx.navigation.NavController;
@@ -19,10 +22,13 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import edu.cnm.deepdive.lightbulb.R;
 import edu.cnm.deepdive.lightbulb.service.GoogleSignInService;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
   private AppBarConfiguration mAppBarConfiguration;
+  private GoogleSignInService googleSignInService;
+  private Object OnNavigationItemSelectedListener;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +38,20 @@ public class MainActivity extends AppCompatActivity {
     setSupportActionBar(toolbar);
     DrawerLayout drawer = findViewById(R.id.drawer_layout);
     NavigationView navigationView = findViewById(R.id.nav_view);
+
+    //inflate header layout
+    View navView =  navigationView.inflateHeaderView(R.layout.nav_header_main);
+//reference to views
+    ImageView imgvw = (ImageView)navView.findViewById(R.id.avatar);
+    TextView name = (TextView)navView.findViewById(R.id.name);
+    TextView email = (TextView)navView.findViewById( R.id.email );
+//set views
+//    imgvw.setImageResource(R.drawable.your_image);
+    name.setText("Steven Zuniga");
+
+//    navigationView.setNavigationItemSelectedListener(
+//        (NavigationView.OnNavigationItemSelectedListener) this );
+
     // Passing each menu ID as a set of Ids because each
     // menu should be considered as top level destinations.
     mAppBarConfiguration = new AppBarConfiguration.Builder(
