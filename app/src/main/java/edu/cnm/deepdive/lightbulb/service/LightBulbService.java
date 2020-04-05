@@ -36,8 +36,7 @@ public interface LightBulbService {
 
   @GET("keywords")
   Single<List<Keyword>> getAllKeywords(
-      @Header("Authorization") String oauthHeader,
-      @Query("includeNull") boolean includeNull, @Query("includeEmpty") boolean includeEmpty);
+      @Header("Authorization") String oauthHeader);
 
   @GET("comments/search")
   Single<List<Comment>> getCommentsFiltered(
