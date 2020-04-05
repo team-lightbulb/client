@@ -93,6 +93,20 @@ public class MainViewModel extends AndroidViewModel {
         .addOnFailureListener(throwable::postValue);
   }
 
+  public void refreshKeywords() {
+    throwable.setValue(null);
+    GoogleSignInService.getInstance().refresh()
+        .addOnSuccessListener((account) ->
+            pending.add(
+                repository.getAllKeywords(account.getIdToken())
+                    .subscribe(
+                        keywords::postValue,
+                        throwable::postValue
+                    )
+            ))
+        .addOnFailureListener(throwable::postValue);
+  }
+
   public void save(Comment comment) {
     throwable.setValue(null);
     GoogleSignInService.getInstance().refresh()

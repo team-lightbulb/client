@@ -5,12 +5,33 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
+
+  <com.google.android.material.textfield.TextInputLayout
+    android:id="@+id/filter_layout"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    app:hintEnabled="true"
+    app:hintAnimationEnabled="true"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent">
+
+    <AutoCompleteTextView
+      android:id="@+id/filter"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:inputType="text"
+      android:hint="@string/filter_hint"
+      android:drawableEnd="@android:drawable/ic_menu_search"/>
+
+  </com.google.android.material.textfield.TextInputLayout>
+
   <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/comment_list"
     android:layout_width="0dp"
     android:layout_height="0dp"
     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/filter_layout"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"/>

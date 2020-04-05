@@ -8,20 +8,35 @@
   <fragment
     android:id="@+id/nav_recent"
     android:label="@string/title_recent"
-    android:name="edu.cnm.deepdive.lightbulb.controller.RecentFragment"
-    tools:layout="@layout/fragment_recent"/>
+    android:name="edu.cnm.deepdive.lightbulb.controller.CommentsFragment"
+    tools:layout="@layout/fragment_comments">
+    <argument
+      android:name="variant"
+      app:argType="edu.cnm.deepdive.lightbulb.controller.CommentsFragment$Variant"
+      android:defaultValue="RECENT_COMMENTS"/>
+  </fragment>
 
   <fragment
     android:id="@+id/nav_mine"
     android:label="@string/title_mine"
-    android:name="edu.cnm.deepdive.lightbulb.controller.MyCommentsFragment"
-    tools:layout="@layout/fragment_new_comment"/>
+    android:name="edu.cnm.deepdive.lightbulb.controller.CommentsFragment"
+    tools:layout="@layout/fragment_new_comment">
+    <argument
+      android:name="variant"
+      app:argType="edu.cnm.deepdive.lightbulb.controller.CommentsFragment$Variant"
+      android:defaultValue="MY_COMMENTS"/>
+  </fragment>
 
   <fragment
     android:id="@+id/nav_search"
     android:label="@string/title_search"
-    android:name="edu.cnm.deepdive.lightbulb.controller.SearchFragment"
-    tools:layout="@layout/fragment_search"/>
+    android:name="edu.cnm.deepdive.lightbulb.controller.CommentsFragment"
+    tools:layout="@layout/fragment_search">
+    <argument
+      android:name="variant"
+      app:argType="edu.cnm.deepdive.lightbulb.controller.CommentsFragment$Variant"
+      android:defaultValue="SEARCH_COMMENTS"/>
+  </fragment>
 
   <fragment
     android:id="@+id/nav_settings"
