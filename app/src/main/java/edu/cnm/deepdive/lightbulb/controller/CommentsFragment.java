@@ -3,13 +3,9 @@ package edu.cnm.deepdive.lightbulb.controller;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -21,7 +17,6 @@ import edu.cnm.deepdive.lightbulb.model.Comment;
 import edu.cnm.deepdive.lightbulb.model.Keyword;
 import edu.cnm.deepdive.lightbulb.view.CommentRecyclerAdapter;
 import edu.cnm.deepdive.lightbulb.viewmodel.MainViewModel;
-import java.util.Collections;
 import java.util.List;
 
 public class CommentsFragment extends Fragment {
@@ -73,7 +68,7 @@ public class CommentsFragment extends Fragment {
       CommentRecyclerAdapter adapter = new CommentRecyclerAdapter(getContext(), comments,
           (pos, comment) -> {
 
-          });
+          }, replyListener);
       commentList.setAdapter(adapter);
     };
     viewModel = new ViewModelProvider(getActivity()).get(MainViewModel.class);
