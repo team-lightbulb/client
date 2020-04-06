@@ -23,4 +23,6 @@
   <string name="text_of_post">Text of post</string>
   <string name="filter_hint">Filter text or keyword</string>
   <string name="search">Search</string>
+  <string name="ref_user_format">Author: %s</string>
+  <string name="ref_name_format">Subject: %s</string>
 </resources>
