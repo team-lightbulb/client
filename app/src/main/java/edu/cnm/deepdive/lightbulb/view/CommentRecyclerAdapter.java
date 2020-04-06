@@ -40,7 +40,6 @@ public class CommentRecyclerAdapter extends RecyclerView.Adapter<Holder> {
     dateTimeFormat = context.getString(R.string.date_time_format);
   }
 
-
   @NonNull
   @Override
   public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -83,6 +82,7 @@ public class CommentRecyclerAdapter extends RecyclerView.Adapter<Holder> {
     private final TextView text;
     private final ImageView more;
     private final ImageView less;
+    private final ImageView reply;
     private final TextView author;
     private final TextView keywords;
 
@@ -95,6 +95,7 @@ public class CommentRecyclerAdapter extends RecyclerView.Adapter<Holder> {
       text = root.findViewById(R.id.text);
       more = root.findViewById(R.id.more);
       less = root.findViewById(R.id.less);
+      reply = root.findViewById(R.id.reply);
       author = root.findViewById(R.id.author);
       keywords = root.findViewById(R.id.keywords);
     }
@@ -117,6 +118,7 @@ public class CommentRecyclerAdapter extends RecyclerView.Adapter<Holder> {
       clickView.setPaddingRelative(
           startPadding * (comment.getDepth() + 1), topPadding, endPadding, bottomPadding);
       clickView.setOnClickListener((v) -> clickListener.onCommentClick(getAdapterPosition(), comment));
+      reply.setOnClickListener((v) -> replyListener.onReplyClick(getAdapterPosition(), comment));
       itemView.setTag(comment);
     }
 
