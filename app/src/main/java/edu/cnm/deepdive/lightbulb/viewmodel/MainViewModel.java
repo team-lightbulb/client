@@ -12,6 +12,7 @@ import edu.cnm.deepdive.lightbulb.model.Keyword;
 import edu.cnm.deepdive.lightbulb.service.CommentRepository;
 import edu.cnm.deepdive.lightbulb.service.GoogleSignInService;
 import io.reactivex.disposables.CompositeDisposable;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -65,18 +66,22 @@ public class MainViewModel extends AndroidViewModel {
 
   public void setSearchFilter(String filter) {
     throwable.setValue(null);
-    GoogleSignInService.getInstance().refresh()
-        .addOnSuccessListener((account) -> {
-          pending.add(
-              repository.searchComments(account.getIdToken(), filter)
-                  .subscribe(
-                      searchComments::postValue,
-                      throwable::postValue
-                  )
-          );
-        })
-        .addOnFailureListener(
-            throwable::postValue);
+    if (filter != null) {
+      GoogleSignInService.getInstance().refresh()
+          .addOnSuccessListener((account) -> {
+            pending.add(
+                repository.searchComments(account.getIdToken(), filter)
+                    .subscribe(
+                        searchComments::postValue,
+                        throwable::postValue
+                    )
+            );
+          })
+          .addOnFailureListener(
+              throwable::postValue);
+    } else {
+      searchComments.setValue(Collections.emptyList());
+    }
   }
 
   public void refreshComments() {
