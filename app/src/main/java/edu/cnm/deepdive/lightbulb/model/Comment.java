@@ -39,6 +39,8 @@ public class Comment {
 
   private int depth;
 
+  private String excerpt;
+
   public UUID getId() {
     return id;
   }
@@ -125,6 +127,14 @@ public class Comment {
 
   public void setDepth(int depth) {
     this.depth = depth;
+  }
+
+  public String getExcerpt() {
+    return excerpt;
+  }
+
+  public void setExcerpt(String excerpt) {
+    this.excerpt = excerpt;
   }
 
   public boolean isResponseTo(Comment comment) {

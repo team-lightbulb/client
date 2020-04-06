@@ -16,6 +16,8 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CommentRepository {
 
@@ -34,6 +36,9 @@ public class CommentRepository {
     }
     return comparison;
   };
+  //TODO Use values from shared preferences.
+  private static final Pattern EXCERPT_PATTERN =
+      Pattern.compile("^((?:\\w+\\W+){20})(?:(?:\\w+\\W+){5}).+");
 
   private final LightBulbService proxy;
   private final Executor networkPool;
@@ -57,6 +62,12 @@ public class CommentRepository {
         .map(this::linkReferences)
         .map((comments) -> {
           Collections.sort(comments, THREADED_COMPARATOR);
+          return comments;
+        })
+        .map((comments) -> {
+          for (Comment comment: comments) {
+            comment.setExcerpt(excerpt(comment.getText()));
+          }
           return comments;
         });
   }
@@ -157,6 +168,15 @@ public class CommentRepository {
       c2 = c2.getReference();
     }
     return new Comment[] {c1, c2};
+  }
+
+  private String excerpt(String text) {
+    String excerpt = null;
+    Matcher matcher = EXCERPT_PATTERN.matcher(text);
+    if (matcher.matches()) {
+      excerpt = matcher.group(1);
+    }
+    return excerpt;
   }
 
   private static class InstanceHolder {
