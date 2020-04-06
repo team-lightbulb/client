@@ -12,13 +12,33 @@
     android:layout_height="wrap_content"
     android:padding="8dp">
 
+<!--    TODO Add textViews for referenced comment author(User), subject(name). Set visibility of these textviews in  xml to GONE.-->
+
+    <TextView
+      android:id="@+id/ref_user"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:visibility="gone"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+      android:id="@+id/ref_name"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:visibility="gone"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toStartOf="parent"/>
+
+    <!--    ...And so on.-->
+
     <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/subject_layout"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       app:hintEnabled="true"
       app:hintAnimationEnabled="true"
-      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/ref_user"
       app:layout_constraintStart_toStartOf="parent">
 
       <com.google.android.material.textfield.TextInputEditText
@@ -49,6 +69,15 @@
         android:hint="@string/text_of_post"/>
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <ListView
+      android:id="@+id/keyword_list"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:choiceMode="multipleChoiceModal"
+      app:layout_constraintTop_toBottomOf="@id/text_layout"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"/>
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 
