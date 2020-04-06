@@ -29,6 +29,7 @@
       android:id="@+id/date"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
+      android:textStyle="italic"
       android:layout_margin="4dp"
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintStart_toEndOf="@id/hierarchy"
