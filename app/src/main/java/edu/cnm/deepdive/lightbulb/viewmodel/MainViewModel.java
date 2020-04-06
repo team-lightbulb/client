@@ -38,6 +38,7 @@ public class MainViewModel extends AndroidViewModel {
     comment = new MutableLiveData<>();
     throwable = new MutableLiveData<>();
     refreshComments();
+    refreshKeywords();
   }
 
   public LiveData<List<Comment>> getMyComments() {
@@ -121,6 +122,7 @@ public class MainViewModel extends AndroidViewModel {
                   .subscribe(
                       () -> {
                         this.comment.postValue(null);
+                        refreshComments();
                       },
                       throwable::postValue
                   )

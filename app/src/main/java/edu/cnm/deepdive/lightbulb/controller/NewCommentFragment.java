@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog.Builder;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
@@ -60,8 +61,8 @@ public class NewCommentFragment extends DialogFragment {
     refUser = root.findViewById(R.id.ref_user);
     refName = root.findViewById(R.id.ref_name);
     // TODO Get references to additional contextual fields.
-    return new AlertDialog.Builder(getContext())
-        .setTitle("New Conversation")
+    return new Builder(getContext())
+        .setTitle((referenceId != null) ? "New Response" : "New Conversation")
         .setIcon(android.R.drawable.ic_dialog_email)
         .setView(root)
         .setNegativeButton(android.R.string.cancel, (dlg, which) -> {
@@ -108,13 +109,15 @@ public class NewCommentFragment extends DialogFragment {
     if (referenceId != null) {
       viewModel.setCommentId(referenceId);
       viewModel.getComment().observe(getViewLifecycleOwner(), (ref) -> {
-        refComment = ref;
-        refUser.setText(getString(R.string.ref_user_format, ref.getUser().getName()));
-        refName.setText(getString(R.string.ref_name_format, ref.getUser().getName()));
-        // TODO Set the content of additional contextual view objects, as neccesory.
-        refUser.setVisibility(View.VISIBLE);
-        refName.setVisibility(View.VISIBLE);
-        // TODO Make additional contextual view visible, as neccesory.
+        if (ref != null) {
+          refComment = ref;
+          refUser.setText(getString(R.string.ref_user_format, ref.getUser().getName()));
+          refName.setText(getString(R.string.ref_name_format, ref.getName()));
+          // TODO Set the content of additional contextual view objects, as neccesory.
+          refUser.setVisibility(View.VISIBLE);
+          refName.setVisibility(View.VISIBLE);
+          // TODO Make additional contextual view visible, as neccesory.
+        }
       });
     }
   }

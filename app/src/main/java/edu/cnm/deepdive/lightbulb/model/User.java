@@ -1,6 +1,7 @@
 package edu.cnm.deepdive.lightbulb.model;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import java.net.URL;
 import java.util.Date;
 import java.util.UUID;
@@ -17,6 +18,7 @@ public class User {
   private Date updated;
 
   @Expose
+  @SerializedName("displayName")
   private String name;
 
   @Expose
