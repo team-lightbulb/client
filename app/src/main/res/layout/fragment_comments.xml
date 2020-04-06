@@ -5,7 +5,6 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
-
   <com.google.android.material.textfield.TextInputLayout
     android:id="@+id/filter_layout"
     android:layout_width="0dp"
@@ -14,17 +13,26 @@
     app:hintAnimationEnabled="true"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent">
+    app:layout_constraintEnd_toStartOf="@+id/submit_search">
 
     <AutoCompleteTextView
       android:id="@+id/filter"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:inputType="text"
-      android:hint="@string/filter_hint"
-      android:drawableEnd="@android:drawable/ic_menu_search"/>
+      android:hint="@string/filter_hint"/>
 
   </com.google.android.material.textfield.TextInputLayout>
+
+  <ImageView
+    android:id="@+id/submit_search"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/ic_search"
+    android:contentDescription="@string/search"
+    app:layout_constraintTop_toTopOf="@id/filter_layout"
+    app:layout_constraintBottom_toBottomOf="@id/filter_layout"
+    app:layout_constraintEnd_toEndOf="parent"/>
 
   <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/comment_list"

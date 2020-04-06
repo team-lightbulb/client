@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
+import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -29,6 +31,7 @@ public class CommentsFragment extends Fragment {
   private RecyclerView commentList;
   private TextInputLayout filterLayout;
   private AutoCompleteTextView filter;
+  private ImageView submitSearch;
 
   public View onCreateView(@NonNull LayoutInflater inflater,
       ViewGroup container, Bundle savedInstanceState) {
@@ -43,19 +46,19 @@ public class CommentsFragment extends Fragment {
     filterLayout = root.findViewById(R.id.filter_layout);
     filter = root.findViewById(R.id.filter);
     root.findViewById(R.id.new_conversation).setOnClickListener((v) -> createComment(null));
+    submitSearch = root.findViewById(R.id.submit_search);
     variant = (Variant) getArguments().getSerializable(VARIANT_KEY);
     if (variant == null) {
       variant = Variant.RECENT_COMMENTS;
     }
     if (variant != Variant.SEARCH_COMMENTS) {
       filterLayout.setVisibility(View.GONE);
+      submitSearch.setVisibility(View.GONE);
     } else {
-      filter.setOnFocusChangeListener((v, hasFocus) -> {
-        if (!hasFocus) {
-          String f = filter.getText().toString().trim();
-          if (f.length() >= 3) {
-            viewModel.setSearchFilter(filter.getText().toString().trim());
-          }
+      submitSearch.setOnClickListener((v) -> {
+        String f = filter.getText().toString().trim();
+        if (f.length() >= 3) {
+          viewModel.setSearchFilter(filter.getText().toString().trim());
         }
       });
     }
@@ -83,6 +86,7 @@ public class CommentsFragment extends Fragment {
         });
         viewModel.getSearchComments().observe(getViewLifecycleOwner(), observer);
         viewModel.refreshKeywords();
+        viewModel.setSearchFilter(null);
         break;
     }
   }
