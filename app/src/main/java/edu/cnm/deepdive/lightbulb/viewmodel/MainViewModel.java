@@ -86,7 +86,7 @@ public class MainViewModel extends AndroidViewModel {
   }
 
   public void refreshComments() {
-    throwable.setValue(null);
+    throwable.postValue(null);
     GoogleSignInService.getInstance().refresh()
         .addOnSuccessListener((account) ->
             pending.add(
@@ -100,7 +100,7 @@ public class MainViewModel extends AndroidViewModel {
   }
 
   public void refreshKeywords() {
-    throwable.setValue(null);
+    throwable.postValue(null);
     GoogleSignInService.getInstance().refresh()
         .addOnSuccessListener((account) ->
             pending.add(
@@ -114,7 +114,7 @@ public class MainViewModel extends AndroidViewModel {
   }
 
   public void save(Comment comment) {
-    throwable.setValue(null);
+    throwable.postValue(null);
     GoogleSignInService.getInstance().refresh()
         .addOnSuccessListener((account) -> {
           pending.add(
@@ -132,7 +132,7 @@ public class MainViewModel extends AndroidViewModel {
   }
 
   public void remove(Comment comment) {
-    throwable.setValue(null);
+    throwable.postValue(null);
     GoogleSignInService.getInstance().refresh()
         .addOnSuccessListener((account) -> {
           pending.add(
@@ -149,7 +149,7 @@ public class MainViewModel extends AndroidViewModel {
   }
 
   public void setCommentId(UUID id) {
-    throwable.setValue(null);
+    throwable.postValue(null);
     GoogleSignInService.getInstance().refresh()
         .addOnSuccessListener(
             (account) -> pending.add(
