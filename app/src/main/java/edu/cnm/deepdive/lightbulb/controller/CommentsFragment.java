@@ -3,13 +3,9 @@ package edu.cnm.deepdive.lightbulb.controller;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -21,8 +17,8 @@ import edu.cnm.deepdive.lightbulb.model.Comment;
 import edu.cnm.deepdive.lightbulb.model.Keyword;
 import edu.cnm.deepdive.lightbulb.view.CommentRecyclerAdapter;
 import edu.cnm.deepdive.lightbulb.viewmodel.MainViewModel;
-import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 public class CommentsFragment extends Fragment {
 
@@ -46,10 +42,7 @@ public class CommentsFragment extends Fragment {
     commentList = root.findViewById(R.id.comment_list);
     filterLayout = root.findViewById(R.id.filter_layout);
     filter = root.findViewById(R.id.filter);
-    root.findViewById(R.id.new_conversation).setOnClickListener((v) -> {
-      NewCommentFragment fragment = NewCommentFragment.createInstance(null);
-      fragment.show(getChildFragmentManager(), fragment.getClass().getName());
-    });
+    root.findViewById(R.id.new_conversation).setOnClickListener((v) -> createComment(null));
     variant = (Variant) getArguments().getSerializable(VARIANT_KEY);
     if (variant == null) {
       variant = Variant.RECENT_COMMENTS;
@@ -71,9 +64,7 @@ public class CommentsFragment extends Fragment {
   private void setupViewModel() {
     Observer<List<Comment>> observer = (comments) -> {
       CommentRecyclerAdapter adapter = new CommentRecyclerAdapter(getContext(), comments,
-          (pos, comment) -> {
-
-          });
+          (pos, comment) -> {}, (pos, comment) -> createComment(comment.getId()));
       commentList.setAdapter(adapter);
     };
     viewModel = new ViewModelProvider(getActivity()).get(MainViewModel.class);
@@ -94,6 +85,11 @@ public class CommentsFragment extends Fragment {
         viewModel.refreshKeywords();
         break;
     }
+  }
+
+  private void createComment(UUID id) {
+    NewCommentFragment fragment = NewCommentFragment.createInstance(id);
+    fragment.show(getChildFragmentManager(), fragment.getClass().getName());
   }
 
   public enum Variant {
