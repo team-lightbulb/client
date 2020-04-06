@@ -2,6 +2,7 @@ package edu.cnm.deepdive.lightbulb.controller;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ public class NewCommentFragment extends DialogFragment {
   private Comment refComment; //this will be null if we dont have a referenceid.
   private TextView refUser;
   private TextView refName;
+  private List<Keyword> keywords;
   // TODO Declare additional contextual fields as necessary.
 
   public static NewCommentFragment createInstance(UUID referenceId) {
@@ -70,14 +72,13 @@ public class NewCommentFragment extends DialogFragment {
           comment.setText(text.getText().toString().trim());
           comment.setReference(refComment);
           List<Keyword> keywords = new ArrayList<>();
-          for(int i = 0; i < keywordList.getCheckedItemPositions().size(); ++i) {
-            int lPos = keywordList.getCheckedItemPositions().keyAt(i);
-            boolean isChecked = keywordList.getCheckedItemPositions().get(lPos);
-            if(isChecked) {
-              keywords.add(comment.setKeywords());
+          SparseBooleanArray checks = keywordList.getCheckedItemPositions();
+          for (int i = 0; i < this.keywords.size(); ++i) {
+            if (checks.get(i)) {
+              keywords.add(this.keywords.get(i));
             }
           }
-          comment.setKeywords()
+          comment.setKeywords(keywords.toArray(new Keyword[0]));
           // TODO getKeyWord and other info.
           //  Create an empty list<keyword>.
           //  Iterate over keywordList.getCheckedItemPositions() adding the keyword from the current position to the list of keyword.
@@ -99,6 +100,7 @@ public class NewCommentFragment extends DialogFragment {
     super.onViewCreated(view, savedInstanceState);
     viewModel = new ViewModelProvider(getActivity()).get(MainViewModel.class);
     viewModel.getKeywords().observe(getViewLifecycleOwner(), (keywords) -> {
+      this.keywords = keywords;
       ArrayAdapter<Keyword> adapter =
           new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, keywords);
       keywordList.setAdapter(adapter);
