@@ -39,6 +39,7 @@ public class CommentRepository {
   private final Executor networkPool;
   private final DateFormat formatter;
 
+
   @SuppressLint("SimpleDateFormat")
   private CommentRepository() {
     proxy = LightBulbService.getInstance();
@@ -76,10 +77,9 @@ public class CommentRepository {
         });
   }
 
-  public Single<List<Keyword>> getAllKeywords(
-      String token, boolean includeNull, boolean includeEmpty) {
+  public Single<List<Keyword>> getAllKeywords(String token) {
     return proxy
-        .getAllKeywords(String.format(OAUTH_HEADER_FORMAT, token), includeNull, includeEmpty)
+        .getAllKeywords(String.format(OAUTH_HEADER_FORMAT, token))
         .subscribeOn(Schedulers.from(networkPool));
   }
 
