@@ -26,4 +26,6 @@
   <string name="ref_user_format">Author: %s</string>
   <string name="ref_name_format">Subject: %s</string>
   <string name="more_format">%s &#x2026;</string>
+  <string name="default_reply_subject">Re: %s</string>
+  <string name="reply_check">^(?i)re:.*$</string>
 </resources>
