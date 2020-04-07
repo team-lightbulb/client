@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 public class NewCommentFragment extends DialogFragment {
 
@@ -39,6 +40,7 @@ public class NewCommentFragment extends DialogFragment {
   private TextView refUser;
   private TextView refName;
   private List<Keyword> keywords;
+  private Pattern replyCheck;
   // TODO Declare additional contextual fields as necessary.
 
   public static NewCommentFragment createInstance(UUID referenceId) {
@@ -58,12 +60,14 @@ public class NewCommentFragment extends DialogFragment {
     subject = root.findViewById(R.id.subject);
     text = root.findViewById(R.id.text);
     keywordList = root.findViewById(R.id.keyword_list);
+//    keywordList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+//    keywordList.setItemsCanFocus(false);
     refUser = root.findViewById(R.id.ref_user);
     refName = root.findViewById(R.id.ref_name);
     // TODO Get references to additional contextual fields.
     return new Builder(getContext())
         .setTitle((referenceId != null) ? "New Response" : "New Conversation")
-        .setIcon(android.R.drawable.ic_dialog_email)
+        .setIcon(R.drawable.ic_text_dialog)
         .setView(root)
         .setNegativeButton(android.R.string.cancel, (dlg, which) -> {
         })
@@ -80,11 +84,7 @@ public class NewCommentFragment extends DialogFragment {
             }
           }
           comment.setKeywords(keywords.toArray(new Keyword[0]));
-          // TODO getKeyWord and other info.
-          //  Create an empty list<keyword>.
-          //  Iterate over keywordList.getCheckedItemPositions() adding the keyword from the current position to the list of keyword.
-          //  Invoke comment.setKeywords, passing it the new list of keyword.
-          viewModel.save(comment);
+           viewModel.save(comment);
         })
         .create();
   }
@@ -103,13 +103,20 @@ public class NewCommentFragment extends DialogFragment {
     viewModel.getKeywords().observe(getViewLifecycleOwner(), (keywords) -> {
       this.keywords = keywords;
       ArrayAdapter<Keyword> adapter =
-          new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, keywords);
+          new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_multiple_choice, keywords);
       keywordList.setAdapter(adapter);
     });
+    viewModel.refreshKeywords();
     if (referenceId != null) {
       viewModel.setCommentId(referenceId);
       viewModel.getComment().observe(getViewLifecycleOwner(), (ref) -> {
         if (ref != null) {
+          replyCheck = Pattern.compile(getString(R.string.reply_check));
+          if (replyCheck.matcher(ref.getName()).matches()) {
+            subject.setText(ref.getName());
+          } else {
+            subject.setText(getString(R.string.default_reply_subject, ref.getName()));
+          }
           refComment = ref;
           refUser.setText(getString(R.string.ref_user_format, ref.getUser().getName()));
           refName.setText(getString(R.string.ref_name_format, ref.getName()));
