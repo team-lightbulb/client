@@ -37,8 +37,6 @@ public class MainViewModel extends AndroidViewModel {
     keywords = new MutableLiveData<>();
     comment = new MutableLiveData<>();
     throwable = new MutableLiveData<>();
-    refreshComments();
-    refreshKeywords();
   }
 
   public LiveData<List<Comment>> getMyComments() {
