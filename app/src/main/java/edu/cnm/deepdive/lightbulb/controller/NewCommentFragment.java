@@ -48,7 +48,7 @@ public class NewCommentFragment extends DialogFragment {
     Bundle args = new Bundle();
     args.putSerializable(REFERENCE_ID_KEY, referenceId);
     fragment.setArguments(args);
-    return fragment;
+    return fragment
   }
 
 
