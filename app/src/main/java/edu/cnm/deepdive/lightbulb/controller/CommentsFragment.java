@@ -74,9 +74,11 @@ public class CommentsFragment extends Fragment {
     switch (variant) {
       case RECENT_COMMENTS:
         viewModel.getRecentComments().observe(getViewLifecycleOwner(), observer);
+        viewModel.refreshComments(); //FIXME Add query for last n days.(Should come from shared preferences)
         break;
       case MY_COMMENTS:
         viewModel.getMyComments().observe(getViewLifecycleOwner(), observer);
+        viewModel.refreshComments(); //FIXME Add query for current users comments
         break;
       case SEARCH_COMMENTS:
         viewModel.getKeywords().observe(getViewLifecycleOwner(), (keywords) -> {

@@ -38,7 +38,7 @@ public class CommentRepository {
   };
   //TODO Use values from shared preferences.
   private static final Pattern EXCERPT_PATTERN =
-      Pattern.compile("^((?:\\w+\\W+){20})(?:(?:\\w+\\W+){5}).+");
+      Pattern.compile("^((?:\\w+\\W+){20})(?:(?:\\w+\\W+){5}).+", Pattern.DOTALL);
 
   private final LightBulbService proxy;
   private final Executor networkPool;
@@ -85,6 +85,12 @@ public class CommentRepository {
             return result;
           });
           return comments;
+        })
+        .map((comments) -> {
+          for (Comment comment: comments) {
+            comment.setExcerpt(excerpt(comment.getText()));
+          }
+          return comments;
         });
   }
 
@@ -119,7 +125,11 @@ public class CommentRepository {
 
   public Single<Comment> get(String token, UUID id) {
     return proxy.getComment(String.format(OAUTH_HEADER_FORMAT, token), id)
-        .subscribeOn(Schedulers.from(networkPool));
+        .subscribeOn(Schedulers.from(networkPool))
+        .map((comment) -> {
+          comment.setExcerpt(excerpt(comment.getText()));
+          return comment;
+        });
   }
 
   private List<Comment> linkReferences(List<Comment> comments) {
